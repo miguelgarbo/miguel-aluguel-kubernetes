@@ -1,0 +1,19 @@
+#OS SERVICES FUNCIONAM COMO LOAD BALANCER DO KUBERNETS
+#ELE PROVE O IP ESTAVEL - EXPOSIÇÃO DA PORTA - ENCAMINHAMENTO DE TRAFEGO
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+  namespace: todo-app
+spec:
+  type: NodePort
+  # AQUI É AONDE EU INFORMO O DEPLOYMENT
+  #FAZ O SERVICE PROCURAR PODS QUE TENHAM O LABEL APP: FRONTEND
+  #DISTRIBUINDO ASSIM O TRAFEGO ENTRE ELES
+  #É assim que o Service encontra os Pods criados pelo Deployment
+  selector:
+    app: frontend
+  ports:
+    - port: 80
+      targetPort: 80
+      nodePort: 30080

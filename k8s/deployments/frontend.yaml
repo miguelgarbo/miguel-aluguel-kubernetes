@@ -1,0 +1,27 @@
+#define e mantém a quantidade desejada de Pods.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  namespace: todo-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  #DENTRO DA TAG TEMPLATE HÁ TODA DEFINIÇÃO DOS PODS
+  #AQUI NO CASO ESTA DECLARANDO O POD DO FRONT END
+
+  template:
+    metadata:
+      labels:
+      #É AQUI NO LABEL ONDE HÁ A IDENTIFICAÇÃO DO POD PRO NOSSO SERVICE
+        app: frontend
+    spec:
+      containers:
+      #AQ EU PODERIA SUBIR MAIS DE UM CONTAINER
+        - name: frontend
+          image: todo-frontend:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 80
