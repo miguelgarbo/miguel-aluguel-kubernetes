@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: backend
-  namespace: todo-app
+  namespace: miguel-aluguel
 spec:
   replicas: 1
   selector:
@@ -15,17 +15,14 @@ spec:
     spec:
       containers:
         - name: backend
-          image: todo-backend:latest
-          imagePullPolicy: Never
+          image: miguelgarbo/miguel_aluguel_back_end:v.3
+          imagePullPolicy: IfNotPresent
           ports:
             - name: http
-              containerPort: 5000
+              containerPort: 8080
           envFrom:
             - configMapRef:
                 name: backend-config
-          env:
-            - name: MONGO_URI
-              valueFrom:
-                secretKeyRef:
-                  name: backend-secret
-                  key: MONGO_URI
+            - secretRef:
+                name: backend-secret
+         

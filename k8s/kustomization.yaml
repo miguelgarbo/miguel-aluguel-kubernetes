@@ -2,13 +2,21 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - namespace.yaml
-  - configmaps/backend.yaml
-  - secrets/mongo.yaml
+
+  - secrets/postgres.yaml
   - secrets/backend.yaml
-  - storage/mongo.yaml
-  - deployments/mongo.yaml
+
+  - configmaps/backend.yaml
+  - configmaps/frontend.yaml
+
+  - storage/postgres.yaml
+
+  - deployments/postgres.yaml
   - deployments/backend.yaml
   - deployments/frontend.yaml
-  - services/mongo.yaml
+
+  - services/postgres.yaml
   - services/backend.yaml
   - services/frontend.yaml
+
+
