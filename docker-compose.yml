@@ -6,14 +6,14 @@ services:
     container_name: miguel_aluguel_backend_official
 
     ports:
-      - "8080:8080"
+      - "8081:8080"
 
     environment:
       DB_URL: jdbc:postgresql://postgres:5432/miguel_aluguel
       DB_USERNAME: postgres
       DB_PASSWORD: postgres
-      HASH_TOKEN: 
-      FRONT_URL: http://18.225.171.75
+      HASH_TOKEN: ch7ZyBOjWpLhyjmpmJWJlF3fEfNR5bW2aFYwqADEJksenvVr3MJMPWaWMk1UaaTjnJExf8EnCd2NxWyVf8TWbA
+      FRONT_URL: http://localhost
 
     depends_on:
       postgres:
@@ -28,7 +28,7 @@ services:
     container_name: miguel_aluguel_postgres
 
     ports:
-      - "5432:5432"
+      - "5433:5432"
 
     environment:
       POSTGRES_DB: miguel_aluguel
@@ -48,7 +48,7 @@ services:
 
 
   frontend:
-    image: miguelgarbo/miguel_aluguel_front_end:v.7
+    image: miguelgarbo/miguel_aluguel_front_end:v8
 
     container_name: miguel_aluguel_frontend
 
@@ -56,7 +56,7 @@ services:
       - "80:80"
 
     environment:
-      - VITE_API_URL=http://18.225.171.75:8080/api
+      - VITE_API_URL=http://localhost:8081/api
 
     depends_on:
       - backend
