@@ -1,22 +1,21 @@
 # Projeto Miguel Aluguel - Deploy com Minikube + K8S
 
-- Código-fonte(/frontend e /backend): projeto desenvolvido no Mensal 1, com as adaptações necessárias.
+<h3>Contexto e Materiais Utilizados</h3>
 
-- Dockerfiles(/frontend e /backend): arquivos utilizados para construir as imagens dos componentes.(estão sendo puxados do dockerhub)
+O objeto para deploy é o projeto previamente desenvolvido pelo grupo como entrega no Projeto Mensal 1, mediante as adaptações necessárias para se adequar aos requisitos de compatibilidade com o Kubernetes e ao conteúdo da presente entrega.
 
-- Manifestos Kubernetes(/k8s): arquivos YAML contendo Deployments, Services e demais recursos utilizados.
+Este código-fonte foi dividido entre os repositórios [```front-end```](https://github.com/miguelgarbo/miguel_aluguel_front_end.git) e [```back-end```](https://github.com/Xua1zin/MiguelAluguel-Back.git). Os dockerfiles correspondentes aos arquivos destes repositórios estão hospedados no DockerHub, e são utilizados para a construção das imagens dos compenentes.
 
-- README.md(/): documentação explicando como executar o projeto no Minikube.
+O arquivo de configuração YAML do Kubernetes(chamado de Manifesto, presente no diretório ```/k8s```) contém Deployments, Services e os demais recursos empregados pela plataforma. Serve como modelo-guia para a construção e execução do projeto.
 
-- Evidências(/evidencias): capturas de tela demonstrando os Pods, Services e Deployments funcionando, além da aplicação em execução.
+O presente arquivo(```README.md```) tem o intuito de servir como documentação explicativa do projeto, material de estudo aos integrantes e manual de instruções para facilitar a reprodutibilidade ao projeto dentro do ambiente MiniKube.
 
-- **Frontend:** [Repositório do Frontend](https://github.com/miguelgarbo/miguel_aluguel_front_end.git)
-- **Backend:** [Repositório do Backend](https://github.com/Xua1zin/MiguelAluguel-Back.git)
+Para fins de entrega do projeto, criamos o diretório Evidências(```/evidencias```) contendo capturas de tela demonstrativas do pleno funcionamento de Pods, Services e Deployments em conjunto com a  aplicação em execução.
 
-## Pré-requisitos
 
-Docker, Minikube e kubectl instalados
+## Pré-requisitos para Execução
 
+Para executar o conteúdo deste repositório, será necessário instalar [```Docker```](https://docs.docker.com/engine/install/), [```Minikube```](https://minikube.sigs.k8s.io/docs/start/?arch=%2Flinux%2Fx86-64%2Fstable%2Fbinary+download) e [```kubectl```](https://kubernetes.io/docs/tasks/tools/#kubectl) instalados. As instruções de instalação irão variar dependendo da atual versão de cada uma das ferramentas e serviços. Por isso, direcionamos o usuário aos endereços listados acima. Abaixo, uma instalação a título de exemplo dos três serviços em uma máquina Ubuntu.
 
 ### Antes de fazer o deploy
 
