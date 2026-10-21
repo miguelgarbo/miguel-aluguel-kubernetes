@@ -13,6 +13,10 @@ spec:
       labels:
         app: backend
     spec:
+      # como o backend está em repo privado precisa de autenticação antes de puxar a imagem
+      imagePullSecrets:
+        - name: docker-secret
+
       containers:
         - name: backend
           image: miguelgarbo/miguel_aluguel_back_end:v.3
@@ -25,4 +29,3 @@ spec:
                 name: backend-config
             - secretRef:
                 name: backend-secret
-         

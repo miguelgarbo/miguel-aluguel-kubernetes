@@ -6,6 +6,6 @@ metadata:
 data:
   DB_URL: "jdbc:postgresql://postgres-service:5432/miguel_aluguel"
   DB_USERNAME: "postgres"
-  FRONT_URL: "http://192.168.49.2:30081"
+  FRONT_URL: "http://127.0.0.1:8081"
   SPRING_PROFILES_ACTIVE: "prod"
   

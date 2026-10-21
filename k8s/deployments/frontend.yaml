@@ -23,6 +23,7 @@ spec:
         - name: frontend
           image: miguelgarbo/miguel_aluguel_front_end:v8
           imagePullPolicy: IfNotPresent
+          
           ports:
             - containerPort: 80
           envFrom:

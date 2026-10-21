@@ -19,4 +19,3 @@ resources:
   - services/backend.yaml
   - services/frontend.yaml
 
-
