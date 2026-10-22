@@ -12,7 +12,7 @@ services:
       DB_URL: jdbc:postgresql://postgres:5432/miguel_aluguel
       DB_USERNAME: postgres
       DB_PASSWORD: postgres
-      HASH_TOKEN: ch7ZyBOjWpLhyjmpmJWJlF3fEfNR5bW2aFYwqADEJksenvVr3MJMPWaWMk1UaaTjnJExf8EnCd2NxWyVf8TWbA
+      HASH_TOKEN: /JWAsECGMT6eeVSlblo4mT+tGKwK5BYckJ8c/jNA7Dx3idovfI5UHu1UyrHpqYnI
       FRONT_URL: http://localhost
 
     depends_on:
