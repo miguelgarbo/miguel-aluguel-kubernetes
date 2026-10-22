@@ -1,6 +1,6 @@
 # Projeto Miguel Aluguel - Deploy com Minikube + K8S
 
-<h3>Contexto e Materiais Utilizados</h3>
+<h2>Contexto e Materiais Utilizados</h2>
 
 O objeto para deploy é o projeto previamente desenvolvido pelo grupo como entrega no Projeto Mensal 1, mediante as adaptações necessárias para se adequar aos requisitos de compatibilidade com o Kubernetes e ao conteúdo da presente entrega.
 
@@ -13,11 +13,58 @@ O presente arquivo(```README.md```) tem o intuito de servir como documentação 
 Para fins de entrega do projeto, criamos o diretório Evidências(```/evidencias```) contendo capturas de tela demonstrativas do pleno funcionamento de Pods, Services e Deployments em conjunto com a  aplicação em execução.
 
 
-## Pré-requisitos para Execução
+<h2>Pré-requisitos para Execução</h2>
 
-Para executar o conteúdo deste repositório, será necessário instalar [```Docker```](https://docs.docker.com/engine/install/), [```Minikube```](https://minikube.sigs.k8s.io/docs/start/?arch=%2Flinux%2Fx86-64%2Fstable%2Fbinary+download) e [```kubectl```](https://kubernetes.io/docs/tasks/tools/#kubectl) instalados. As instruções de instalação irão variar dependendo da atual versão de cada uma das ferramentas e serviços. Por isso, direcionamos o usuário aos endereços listados acima. Abaixo, uma instalação a título de exemplo dos três serviços em uma máquina Ubuntu.
+Para executar o conteúdo deste repositório, será necessário instalar [```Docker```](https://docs.docker.com/engine/install/), [```Minikube```](https://minikube.sigs.k8s.io/docs/start/?arch=%2Flinux%2Fx86-64%2Fstable%2Fbinary+download) e [```kubectl```](https://kubernetes.io/docs/tasks/tools/#kubectl).
 
-### Antes de fazer o deploy
+As instruções de instalação irão variar dependendo da atual versão de cada uma das ferramentas e serviços. Por isso, recomendamos que o usuário visite os endereços listados acima para acessar a versão mais recente destes comandos, recomendada pelos respectivos emissores. Abaixo, listamos o procedimento de instalação utilizado pelos integrantes do grupo no ```Linux Ubuntu```.
+
+1. Docker
+``` 
+# Remove old packages and add Docker's official repository
+sudo apt-get update
+sudo apt-get install -y ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] \
+https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" \
+| sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+# Install Docker Engine
+sudo apt-get update
+sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+# Run Docker without sudo
+sudo usermod -aG docker $USER
+newgrp docker
+
+docker --version
+```
+
+2. Minikube
+```
+bash
+curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+sudo install minikube-linux-amd64 /usr/local/bin/minikube
+rm minikube-linux-amd64
+
+minikube version
+minikube start --driver=docker
+```
+
+3. kubectl
+```
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+rm kubectl
+
+kubectl version --client
+kubectl get nodes
+```
+
+<h2> Antes de fazer o deploy </h2>
 
 Configurar as demais credenciais que estão vazias
 
