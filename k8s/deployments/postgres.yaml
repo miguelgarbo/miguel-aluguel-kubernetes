@@ -1,32 +1,48 @@
+# Define a versão da API do Kubernetes utilizada para Deployments.
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  # Nome do Deployment responsável por gerenciar o banco de dados.
   name: postgres
+  # Namespace em que o recurso será criado.
   namespace: miguel-aluguel
 spec:
+  # Define a quantidade desejada de Pods do PostgreSQL.
   replicas: 1
+  # Seleciona os Pods que serão gerenciados pelo Deployment.
   selector:
     matchLabels:
       app: postgres
+  # Template que define como o Pod do banco será criado.
   template:
     metadata:
+      # Identifica o Pod do PostgreSQL.
       labels:
         app: postgres
     spec:
+      # Define os containers executados dentro do Pod.
       containers:
         - name: postgres
           image: postgres:17-alpine
+          # Reutiliza a imagem existente no nó, se disponível. Caso contrário, tenta baixá-la do repositório.
           imagePullPolicy: IfNotPresent
+          # Porta padrão utilizada pelo PostgreSQL para receber conexões com o banco de dados.
           ports:
             - containerPort: 5432
+          # Carrega as variáveis de ambiente a partir de um Secret.
           envFrom:
             - secretRef:
                 name: postgres-secret
 
+          # Define onde o armazenamento persistente será montado dentro do container.
           volumeMounts:
             - name: postgres-data
+              # Diretório de montagem dentro do container.
               mountPath: /data/db
+      # Declara os volumes disponíveis para os containers do Pod.
       volumes:
         - name: postgres-data
+          # Vincula o volume a um PersistentVolumeClaim, que solicita armazenamento persistente ao Kubernetes.
           persistentVolumeClaim:
             claimName: postgres-data
+

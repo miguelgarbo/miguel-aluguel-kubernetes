@@ -1,11 +1,20 @@
+# Define a versão da API do Kubernetes utilizada para este recurso.
 apiVersion: v1
+# PersistentVolumeClaim (PVC) representa uma solicitação de armazenamento persistente ao cluster Kubernetes.
 kind: PersistentVolumeClaim
 metadata:
+  # Nome utilizado pelo Deployment do PostgreSQL para referenciar este armazenamento.
   name: postgres-data
+  # Namespace em que o PVC será criado.
   namespace: miguel-aluguel
 spec:
+  # Define como o volume poderá ser acessado.
   accessModes:
+    # Permite que o volume seja montado para leitura e escrita por um único nó por vez.
     - ReadWriteOnce
+  # Define os recursos de armazenamento solicitados.
   resources:
     requests:
+      # Solicita 1 GiB de armazenamento persistente para os dados do PostgreSQL.
       storage: 1Gi
+

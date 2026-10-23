@@ -1,11 +1,20 @@
+# Define a versão da API do Kubernetes utilizada para este recurso.
 apiVersion: v1
+# Service fornece um ponto de acesso estável para o banco de dados, mesmo que o Pod do PostgreSQL seja recriado.
 kind: Service
 metadata:
+  # Nome utilizado pelos outros serviços para localizar o PostgreSQL.
   name: postgres-service
+  # Namespace em que o Service será criado.
   namespace: miguel-aluguel
 spec:
+  # Seleciona o Pod do PostgreSQL identificado pelo label app: postgres no Deployment.
   selector:
     app: postgres
+  # Define a porta de acesso ao banco de dados.
   ports:
+    # Porta disponibilizada pelo Service dentro do cluster.
     - port: 5432
+      # Porta de destino no container do PostgreSQL.
       targetPort: 5432
+

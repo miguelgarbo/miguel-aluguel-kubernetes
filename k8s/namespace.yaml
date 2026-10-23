@@ -1,4 +1,8 @@
+# Define a versão da API do Kubernetes utilizada para este recurso.
 apiVersion: v1
+# Namespace permite agrupar e isolar recursos dentro do cluster, facilitando a organização e o gerenciamento da aplicação.
 kind: Namespace
 metadata:
-  name:  miguel-aluguel
+  # Nome do namespace utilizado pelos recursos do projeto, como Deployments, Services, Secrets, ConfigMaps e PVCs.
+  name: miguel-aluguel
+

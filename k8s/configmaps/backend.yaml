@@ -1,11 +1,22 @@
+# Define a versão da API do Kubernetes utilizada para este recurso.
 apiVersion: v1
+# ConfigMap armazena configurações não sigilosas que podem ser utilizadas pelos containers.
 kind: ConfigMap
 metadata:
+  # Nome utilizado para referenciar este ConfigMap em outros recursos.
   name: backend-config
+  # Namespace onde o recurso será criado.
+  # Os recursos que utilizarem este ConfigMap devem estar no mesmo namespace.
   namespace: miguel-aluguel
+
+# Variáveis de configuração disponibilizadas para a aplicação.
 data:
+  # URL de conexão JDBC com o PostgreSQL, utilizando a porta interna 5432.
   DB_URL: "jdbc:postgresql://postgres-service:5432/miguel_aluguel"
+  # Usuário utilizado para conectar ao banco de dados.
   DB_USERNAME: "postgres"
+  # URL do frontend utilizada pelo backend.
   FRONT_URL: "http://127.0.0.1:8081"
+  # Define o perfil de execução do Spring Boot como "prod".
   SPRING_PROFILES_ACTIVE: "prod"
   

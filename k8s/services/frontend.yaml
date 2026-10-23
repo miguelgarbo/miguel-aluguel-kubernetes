@@ -1,19 +1,23 @@
-#OS SERVICES FUNCIONAM COMO LOAD BALANCER DO KUBERNETS
-#ELE PROVE O IP ESTAVEL - EXPOSIÇÃO DA PORTA - ENCAMINHAMENTO DE TRAFEGO
+# Os Services oferecem um ponto de acesso estável para os Pods.
+# Eles permitem expor portas e encaminhar o tráfego para os Pods selecionados. Também podem distribuir requisições entre eles.
 apiVersion: v1
 kind: Service
 metadata:
+  # Nome utilizado para identificar o Service do frontend.
   name: frontend-service
+  # Namespace em que o Service será criado.
   namespace: miguel-aluguel
 spec:
+  # Define o tipo NodePort, permitindo acessar o frontend por uma porta específica dos nós do cluster Kubernetes.
   type: NodePort
-  # AQUI É AONDE EU INFORMO O DEPLOYMENT
-  #FAZ O SERVICE PROCURAR PODS QUE TENHAM O LABEL APP: FRONTEND
-  #DISTRIBUINDO ASSIM O TRAFEGO ENTRE ELES
-  #É assim que o Service encontra os Pods criados pelo Deployment
+  # O Kubernetes procura Pods com o label app: frontend.
   selector:
     app: frontend
   ports:
+    # Porta disponibilizada pelo Service dentro do cluster.
     - port: 80
+      # Porta em que o servidor web recebe conexões dentro do container do frontend.
       targetPort: 80
+      # Porta exposta nos nós do cluster.
       nodePort: 30081
+

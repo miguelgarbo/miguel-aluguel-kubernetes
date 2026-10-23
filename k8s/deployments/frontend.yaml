@@ -1,32 +1,42 @@
-#define e mantém a quantidade desejada de Pods.
+# Define e mantém a quantidade desejada de Pods em execução.
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  # Nome do Deployment.
   name: frontend
+  # Namespace em que o recurso será criado.
   namespace: miguel-aluguel
 spec:
+  # Define a quantidade desejada de réplicas do frontend.
   replicas: 1
+  # Seleciona os Pods que serão gerenciados por este Deployment.
+  # O seletor deve corresponder aos labels definidos no template.
   selector:
     matchLabels:
       app: frontend
-  #DENTRO DA TAG TEMPLATE HÁ TODA DEFINIÇÃO DOS PODS
-  #AQUI NO CASO ESTA DECLARANDO O POD DO FRONT END
 
+  # Template que contém a definição dos Pods criados pelo Deployment.
   template:
     metadata:
       labels:
-        #É AQUI NO LABEL ONDE HÁ A IDENTIFICAÇÃO DO POD PRO NOSSO SERVICE
+        # Identifica os Pods do frontend.
+        # O Service utiliza este label para localizar os Pods que receberão as requisições.
         app: frontend
     spec:
+      # Lista os containers que serão executados em cada Pod.
+      # Um Pod pode conter mais de um container, embora aqui seja utilizado apenas um para executar o frontend.
       containers:
-        #AQ EU PODERIA SUBIR MAIS DE UM CONTAINER
         - name: frontend
+          # Imagem do frontend publicada no Docker Hub.
           image: miguelgarbo/miguel_aluguel_front_end:v8
+          # Reutiliza uma imagem já existente no nó, se disponível. Caso contrário, tenta baixá-la do repositório.
           imagePullPolicy: IfNotPresent
-          
+
+          # Porta em que o servidor web do frontend recebe conexões dentro do container.
           ports:
             - containerPort: 80
+          # Carrega as variáveis de configuração do frontend definidas no ConfigMap frontend-config.
           envFrom:
             - configMapRef:
                 name: frontend-config
-            
+

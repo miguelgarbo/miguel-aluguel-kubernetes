@@ -1,20 +1,31 @@
+# Define a versão da API do Kustomize utilizada para agrupar e gerenciar os manifestos Kubernetes.
 apiVersion: kustomize.config.k8s.io/v1beta1
+# Indica que este arquivo define uma configuração do Kustomize.
 kind: Kustomization
+# Lista os arquivos YAML que compõem a aplicação.
+# O Kustomize reúne esses recursos em um único conjunto, permitindo aplicá-los ao cluster sem precisar executar 
+# um comando separado para cada manifesto.
 resources:
+  # Cria o namespace utilizado para isolar os recursos do projeto.
   - namespace.yaml
 
+  # Secrets: armazenam credenciais e outras informações sensíveis.
   - secrets/postgres.yaml
   - secrets/backend.yaml
 
+  # ConfigMaps: armazenam configurações não sigilosas utilizadas pelo frontend e pelo backend.
   - configmaps/backend.yaml
   - configmaps/frontend.yaml
 
+  # Armazenamento persistente solicitado pelo PostgreSQL.
   - storage/postgres.yaml
 
+  # Deployments: definem como os Pods e seus containers serão criados e mantidos pelo Kubernetes.
   - deployments/postgres.yaml
   - deployments/backend.yaml
   - deployments/frontend.yaml
 
+  # Services: disponibilizam pontos de acesso estáveis para a comunicação com o banco, o backend e o frontend.
   - services/postgres.yaml
   - services/backend.yaml
   - services/frontend.yaml

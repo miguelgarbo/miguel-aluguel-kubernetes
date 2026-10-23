@@ -1,31 +1,49 @@
+# Define a versão da API do Kubernetes utilizada para Deployments.
 apiVersion: apps/v1
+# Deployment gerencia a criação, atualização e manutenção das réplicas dos Pods da aplicação.
 kind: Deployment
 metadata:
+  # Nome do Deployment.
   name: backend
+  # Namespace em que o Deployment será criado.
   namespace: miguel-aluguel
+
 spec:
+  # Mantém duas réplicas do backend em execução, permitindo distribuir as requisições entre os Pods.
   replicas: 2
+  # Define quais Pods serão gerenciados por este Deployment. O seletor deve corresponder aos labels do template.
   selector:
     matchLabels:
       app: backend
+  # Template utilizado para criar os Pods do backend.
   template:
     metadata:
+      # Label que identifica os Pods do backend.
+      # Também pode ser utilizada por um Service para localizá-los.
       labels:
         app: backend
     spec:
-      # como o backend está em repo privado precisa de autenticação antes de puxar a imagem
+      # Informa ao Kubernetes qual Secret contém as credenciais necessárias para baixar a imagem de um repositório privado.
+      # O Secret deve existir no mesmo namespace deste Deployment.
       imagePullSecrets:
         - name: docker-secret
-
+      # Define os containers executados em cada Pod.
       containers:
         - name: backend
+          # Imagem do backend disponibilizada no Docker Hub, identificada pela tag v.3.
           image: miguelgarbo/miguel_aluguel_back_end:v.3
+          # Utiliza a imagem já existente no nó, se disponível. Caso contrário, tenta baixá-la do repositório.
           imagePullPolicy: IfNotPresent
+          # Porta em que a aplicação backend recebe conexões dentro do container.
           ports:
             - name: http
               containerPort: 8080
+          # Injeta as configurações externas no ambiente do container, sem precisar defini-las diretamente na imagem Docker.
           envFrom:
+            # Carrega as variáveis não sigilosas do ConfigMap.
             - configMapRef:
                 name: backend-config
+            # Carrega as variáveis sigilosas do Secret, como a senha do banco de dados.
             - secretRef:
                 name: backend-secret
+

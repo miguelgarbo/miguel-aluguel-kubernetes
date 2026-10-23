@@ -1,68 +1,95 @@
 services:
-
+  # Serviço responsável pelo backend da aplicação.
+  # A imagem Docker é obtida do Docker Hub.
   backend:
     image: miguelgarbo/miguel_aluguel_back_end:v.3
 
+    # Define um nome fixo para o container.
     container_name: miguel_aluguel_backend_official
-
+    
+    # Mapeia a porta 8081 do host para a porta 8080 do container.
+    # O acesso externo ao backend é realizado pela porta 8081.
     ports:
       - "8081:8080"
 
+    # Variáveis de ambiente utilizadas pelo backend.
     environment:
+      # Endereço de conexão com o PostgreSQL.
       DB_URL: jdbc:postgresql://postgres:5432/miguel_aluguel
       DB_USERNAME: postgres
       DB_PASSWORD: postgres
+      
+      # Parâmetro utilizado pela aplicação para validação de hash.
       HASH_TOKEN: /JWAsECGMT6eeVSlblo4mT+tGKwK5BYckJ8c/jNA7Dx3idovfI5UHu1UyrHpqYnI
+      
+      # URL do frontend utilizada pelo backend.
       FRONT_URL: http://localhost
 
+    # Aguarda o banco de dados passar na verificação de saúde antes de iniciar o backend.
     depends_on:
       postgres:
         condition: service_healthy
 
+    # Reinicia o container automaticamente, exceto se ele for parado manualmente.
     restart: unless-stopped
 
 
+  # Serviço responsável pelo banco de dados PostgreSQL.
   postgres:
     image: postgres:17-alpine
 
+    #Define um nome fixo para o container no banco de dados.
     container_name: miguel_aluguel_postgres
 
+    # Mapeia a porta 5433 do host para a porta 5432 do container.
+    # Permite acessar o banco pelo host usando a porta 5433.
     ports:
       - "5433:5432"
 
+    # Configurações iniciais do banco de dados.
     environment:
       POSTGRES_DB: miguel_aluguel
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
 
+    # Armazena os dados do PostgreSQL em um volume persistente, evitando que sejam perdidos quando o container for recriado.
     volumes:
       - postgres_test_data:/var/lib/postgresql/data
 
+    # Verifica se o PostgreSQL está pronto para receber conexões.
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres -d miguel_aluguel"]
       interval: 5s
       timeout: 5s
       retries: 10
 
+    # Reinicia o container automaticamente, exceto se ele for parado manualmente.
     restart: unless-stopped
 
-
+  # Serviço responsável pelo frontend da aplicação.
+  # A imagem contém a aplicação web e o servidor utilizado para disponibilizar os arquivos ao navegador.
   frontend:
     image: miguelgarbo/miguel_aluguel_front_end:v8
 
+    # Define um nome fixo para o container do frontend.
     container_name: miguel_aluguel_frontend
 
+    # Mapeia a porta 80 do host para a porta 80 do container.
+    # A aplicação pode ser acessada pelo navegador em localhost.
     ports:
       - "80:80"
 
+    # Define a URL utilizada pelo frontend para acessar a API.
     environment:
       - VITE_API_URL=http://localhost:8081/api
 
+    # Define que o backend deve ser iniciado antes do frontend.
     depends_on:
       - backend
 
+    # Reinicia o container automaticamente, exceto se ele for parado manualmente.
     restart: unless-stopped
 
-
+# Declara o volume nomeado utilizado para persistir os dados do PostgreSQL independentemente do ciclo de vida do container.
 volumes:
   postgres_test_data:

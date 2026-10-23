@@ -1,11 +1,21 @@
+# Define a versão da API do Kubernetes utilizada para este recurso.
 apiVersion: v1
+# Service disponibiliza um ponto de acesso estável para os Pods de uma aplicação.
 kind: Service
 metadata:
+  # Nome utilizado por outros recursos para acessar o backend.
   name: backend-service
+  # Namespace em que o Service será criado.
   namespace: miguel-aluguel
 spec:
+  # Seleciona os Pods identificados com app: backend.
+  # O tráfego será distribuído entre os endpoints disponíveis.
   selector:
     app: backend
+  # Define as portas utilizadas pelo Service.
   ports:
-    - port: 8080
+    - # Porta disponibilizada internamente pelo Service.
+      port: 8080
+      # Porta de destino nos Pods.
       targetPort: http
+
